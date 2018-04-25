@@ -7,7 +7,7 @@ class ChatService
       @response_message = "Yo, what can I do for you nigga?"
       @quick_replies = ["News", "Patch Update", "Rankings"]
     when "About"
-      @response_message = "This is a bot developed by Uvhna."
+      @response_message = "I can send you some latest news of Dota 2 (more features will be added later). Developed by Uvhna."
     ###
     when "News"
       elements = []
