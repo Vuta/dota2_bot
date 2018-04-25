@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  kind: MyString
+  content: MyText
+  template: MyText
+  follow_up_message: MyString
+  quick_replies: MyText
+
+two:
+  kind: MyString
+  content: MyText
+  template: MyText
+  follow_up_message: MyString
+  quick_replies: MyText
