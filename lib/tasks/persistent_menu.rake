@@ -19,6 +19,11 @@ task :persistent_menu => :environment do
                 "payload": "News"
               },
               {
+                "title": "Rankings",
+                "type": "postback",
+                "payload": "Rankings"
+              },
+              {
                 "title": "Subscribe",
                 "type": "postback",
                 "payload": "Subscribe"
