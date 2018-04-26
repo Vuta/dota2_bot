@@ -36,5 +36,7 @@ class Message < ApplicationRecord
       },
       message: message_content
     }, access_token: ENV["ACCESS_TOKEN"])
+  rescue => e
+    puts '[debuz] Cannot deliver message to facebook: ' + e.message
   end
 end

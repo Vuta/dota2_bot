@@ -61,19 +61,23 @@ def send_news_for_subscribed_guests(uids, articles_data)
   }.to_json
   response_text = articles_data.length > 1 ? "Here are some latest dota 2 news" : "Here is latest dota 2 news"
   uids.each do |uid|
-    Bot.deliver({
-      recipient: {
-        id: uid
-      },
-      message: {
-        text: response_text
-      }
-    }, access_token: ENV["ACCESS_TOKEN"])
-    Bot.deliver({
-      recipient: {
-        id: uid
-      },
-      message: JSON.parse(response_template)
-    }, access_token: ENV["ACCESS_TOKEN"])
+    begin
+      Bot.deliver({
+        recipient: {
+          id: uid
+        },
+        message: {
+          text: response_text
+        }
+      }, access_token: ENV["ACCESS_TOKEN"])
+      Bot.deliver({
+        recipient: {
+          id: uid
+        },
+        message: JSON.parse(response_template)
+      }, access_token: ENV["ACCESS_TOKEN"])
+    rescue => e
+      puts '[debuz] Cannot deliver message to facebook: ' + e.message
+    end
   end
 end
