@@ -45,9 +45,14 @@ class ChatService
       if guest.subscribe
         @response_message = "You've already subscribed. You can unsubscribe anytime by typing 'Unsubscribe' but I hope you won't ;)"
       else
-        guest.update(subscribe: true)
         @response_message = "Thanks. I will send you latest news and patch update asap."
+        guest.update(subscribe: true)
       end
+    ###
+    when "Unsubscribe", "unsubscribe"
+      @response_message = "Done. You will miss a lot of fun stuff but whatever 😏"
+      guest = Guest.find_by(id: guest_id)
+      guest.update(subscribe: false)
     ###
     when "Help", "help"
       @response_message = "Type 'News' to read dota 2 news.\nType 'Subscribe' so I will send you latest news, patch update asap. You can unsubscribe anytime by typing 'Unsubscribe'.\nType 'About' to know more about me.\nThat's what I can do for now, more features coming soon 😘 (or later, my master is really lazy)."

@@ -1,4 +1,5 @@
 require "facebook/messenger"
+include Facebook::Messenger
 
 namespace :crawl do
   task :news => :environment do
@@ -58,7 +59,7 @@ def send_news_for_subscribed_guests(uids, articles_data)
       }
     }
   }.to_json
-  response_text = articles_data.length > 1 ? "Here are some lates dota 2 news" : "Here is latest dota 2 news"
+  response_text = articles_data.length > 1 ? "Here are some latest dota 2 news" : "Here is latest dota 2 news"
   uids.each do |uid|
     Bot.deliver({
       recipient: {
