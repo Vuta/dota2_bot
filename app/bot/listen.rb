@@ -4,6 +4,8 @@ include Facebook::Messenger
 Facebook::Messenger::Subscriptions.subscribe(access_token: ENV["ACCESS_TOKEN"])
 
 Bot.on :message do |incoming_message|
+  incoming_message.typing_on
+
   text = incoming_message.text
   uid = incoming_message.sender["id"]
   guest = Guest.where(uid: uid).first || Guest.create(uid: uid)
@@ -15,6 +17,8 @@ Bot.on :message do |incoming_message|
 end
 
 Bot.on :postback do |postback|
+  postback.typing_on
+
   text = postback.payload
   uid = postback.sender['id']
   guest = Guest.where(uid: uid).first || Guest.create(uid: uid)
@@ -25,7 +29,7 @@ end
 
 
 def handle_message(text, guest_id)
-  chat_service = ChatService.new
+  chat_service = ChatService.new(guest_id)
   chat_service.execute(text)
 
   Message.create(

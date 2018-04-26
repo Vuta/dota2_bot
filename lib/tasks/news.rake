@@ -1,8 +1,10 @@
+require "facebook/messenger"
+
 namespace :crawl do
   task :news => :environment do
     agent = Mechanize.new
     puts "Crawling news..."
-    news_page = agent.get("https://www.gosugamers.net/dota2/news/")
+    news_page = agent.get("#{ENV["GOSUGAMERS_HOST"]}/dota2/news/")
     puts "Done."
     news_html = Nokogiri::HTML(news_page.body)
     headline = news_html.css("#latest-articles .headline.clearfix")
@@ -24,6 +26,19 @@ namespace :crawl do
       puts "Importing news..."
       Article.import article_columns, articles_data
       puts "Done."
+
+      # send news for subscribed guests
+      # guests = Guest.where(subscribe: true)
+      # guests.pluck(:uid).each do |uid|
+      #   Bot.deliver({
+      #     recipient: {
+      #       id: uid
+      #     },
+      #     message: {
+      #       text: "Test"
+      #     }
+      #   }, access_token: ENV["ACCESS_TOKEN"])
+      end
     end
   end
 end
