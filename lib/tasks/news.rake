@@ -28,17 +28,51 @@ namespace :crawl do
       puts "Done."
 
       # send news for subscribed guests
-      # guests = Guest.where(subscribe: true)
-      # guests.pluck(:uid).each do |uid|
-      #   Bot.deliver({
-      #     recipient: {
-      #       id: uid
-      #     },
-      #     message: {
-      #       text: "Test"
-      #     }
-      #   }, access_token: ENV["ACCESS_TOKEN"])
-      # end
+      uids = Guest.where(subscribe: true).pluck(:uid)
+      send_news_for_subscribed_guests(uids, articles_data)
     end
+  end
+end
+
+def send_news_for_subscribed_guests(uids, articles_data)
+  elements = []
+  articles_data.first(10).each do |article|
+    elements << {
+      "title": article[0],
+      "image_url": "#{ENV["GOSUGAMERS_HOST"]}#{article[2]}",
+      "buttons": [
+        {
+          "type": "web_url",
+          "url": "#{ENV["GOSUGAMERS_HOST"]}#{article[1]}",
+          "title": "Website"
+        }
+      ]
+    }
+  end
+  response_template = {
+    "attachment": {
+      "type": "template",
+      "payload": {
+        "template_type": "generic",
+        "elements": elements
+      }
+    }
+  }.to_json
+  response_text = articles_data.length > 1 ? "Here are some lates dota 2 news" : "Here is latest dota 2 news"
+  uids.each do |uid|
+    Bot.deliver({
+      recipient: {
+        id: uid
+      },
+      message: {
+        text: response_text
+      }
+    }, access_token: ENV["ACCESS_TOKEN"])
+    Bot.deliver({
+      recipient: {
+        id: uid
+      },
+      message: JSON.parse(response_template)
+    }, access_token: ENV["ACCESS_TOKEN"])
   end
 end
