@@ -6,34 +6,34 @@ task :persistent_menu => :environment do
     },
     "persistent_menu": [
       {
-        "locale":"default",
-        "composer_input_disabled":true,
+        "locale": "default",
+        "composer_input_disabled": true,
         "call_to_actions": [
           {
             "title": "Actions",
             "type": "nested",
             "call_to_actions": [
               {
-                "title":"News",
-                "type":"postback",
-                "payload":"News"
+                "title": "News",
+                "type": "postback",
+                "payload": "News"
               },
               {
-                "title":"Patch Update",
-                "type":"postback",
-                "payload":"postback"
+                "title": "Subscribe",
+                "type": "postback",
+                "payload": "Subscribe"
               }
             ]
           },
           {
-            "type":"postback",
-            "title":"About",
-            "payload":"About"
+            "type": "postback",
+            "title": "About",
+            "payload": "About"
           },
           {
-            "type":"postback",
-            "title":"Help",
-            "payload":"Help"
+            "type": "postback",
+            "title": "Help",
+            "payload": "Help"
           }
         ]
       }

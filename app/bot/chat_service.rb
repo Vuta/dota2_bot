@@ -7,14 +7,14 @@ class ChatService
 
   def execute(text)
     case text
-    when "Get Started"
-      @response_message = "Yo, what can I do for you nigga?"
-      @quick_replies = ["News", "Patch Update", "Rankings"]
+    when "Get Started", "hi", "Hi", "hello", "Hello"
+      @response_message = "Yo, what can I do for you?"
+      @quick_replies = ["News", "Help"]
     ###
-    when "About"
-      @response_message = "I can send you some latest news of Dota 2 (more features will be added later). Developed by Uvhna."
+    when "About", "about"
+      @response_message = "I can send you some latest news of Dota 2 (more features will be added later). Developed by Uvhna who is very smart, handsome, charming, and funny ;)"
     ###
-    when "News"
+    when "News", "news"
       elements = []
       Article.order(created_at: :desc, id: :asc).first(5).each do |article|
         elements << {
@@ -40,7 +40,7 @@ class ChatService
         }
       }.to_json
     ###
-    when "Subscribe"
+    when "Subscribe", "subscribe"
       guest = Guest.find_by(id: guest_id)
       if guest.subscribe
         @response_message = "You've already subscribed. You can unsubscribe anytime by typing 'Unsubscribe' but I hope you won't ;)"
@@ -49,11 +49,15 @@ class ChatService
         @response_message = "Thanks. I will send you latest news and patch update asap."
       end
     ###
-    when "Help"
-
+    when "Help", "help"
+      @response_message = "Type 'News' to read dota 2 news.\nType 'Subscribe' so I will send you latest news, patch update asap. You can unsubscribe anytime by typing 'Unsubscribe'.\nType 'About' to know more about me.\nThat's what I can do for now, more features coming soon 😘 (or later, my master is really lazy)."
+      @quick_replies = ["News", "Subscribe", "About"]
+    ###
+    when "chos Vu", "chó Vũ", "chos Vũ", "chos vu", "chó vũ"
+      @response_message = "Stfu, my master is not someone that you can talk shit about 😠"
     ###
     else
-      @response_message = "It doesn't look like anything to me. Type 'Help' to see what I can do 😏."
+      @response_message = "It doesn't look like anything to me. Type 'Help' to see what I can do 😏"
     end
   end
 end

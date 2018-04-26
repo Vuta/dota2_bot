@@ -38,7 +38,7 @@ namespace :crawl do
       #       text: "Test"
       #     }
       #   }, access_token: ENV["ACCESS_TOKEN"])
-      end
+      # end
     end
   end
 end
