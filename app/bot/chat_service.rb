@@ -11,7 +11,7 @@ class ChatService
     ###
     when "News"
       elements = []
-      Article.first(5).each do |article|
+      Article.order(created_at: :desc).first(5).each do |article|
         elements << {
           "title": article.title,
           "image_url": "https://www.gosugamers.net#{article.image}",
