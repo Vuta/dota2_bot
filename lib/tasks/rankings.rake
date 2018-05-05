@@ -22,6 +22,7 @@ namespace :crawl do
     end
 
     ranking_columns = [:rank, :team, :point, :image_url]
+    Ranking.destroy_all
     puts "Importing rankings..."
     Ranking.import ranking_columns, rankings_data
     puts "Done."
